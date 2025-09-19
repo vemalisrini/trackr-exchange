@@ -1,7 +1,38 @@
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
+import type { TooltipProps } from "recharts";
 
 import { cn } from "@/lib/utils";
+
+// Recharts TypeScript types
+type ValueType = string | number;
+type NameType = string | number;
+
+interface ChartTooltipContentProps {
+  active?: boolean;
+  payload?: Array<{
+    value: ValueType;
+    name?: NameType;
+    dataKey?: string | number;
+    color?: string;
+    fill?: string;
+    stroke?: string;
+    strokeWidth?: number;
+    unit?: string;
+    payload?: any; // The actual data payload
+    formatter?: (value: ValueType, name: NameType, props: any, index: number, payload: any) => [React.ReactNode, React.ReactNode];
+  }>;
+  label?: string | number;
+  labelFormatter?: (value: any, payload?: any[]) => React.ReactNode;
+  labelClassName?: string;
+  formatter?: (value: ValueType, name: NameType, props: any, index: number, payload: any) => React.ReactNode;
+  color?: string;
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: "line" | "dot" | "dashed";
+  nameKey?: string;
+  labelKey?: string;
+}
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -91,14 +122,7 @@ const ChartTooltip = RechartsPrimitive.Tooltip;
 
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-    React.ComponentProps<"div"> & {
-      hideLabel?: boolean;
-      hideIndicator?: boolean;
-      indicator?: "line" | "dot" | "dashed";
-      nameKey?: string;
-      labelKey?: string;
-    }
+  ChartTooltipContentProps & React.ComponentProps<"div">
 >(
   (
     {
@@ -229,11 +253,17 @@ const ChartLegend = RechartsPrimitive.Legend;
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
-      hideIcon?: boolean;
-      nameKey?: string;
-    }
+  React.ComponentProps<"div"> & {
+    payload?: Array<{
+      value: string;
+      type?: string;
+      color?: string;
+      dataKey?: string | number;
+    }>;
+    verticalAlign?: "top" | "bottom";
+    hideIcon?: boolean;
+    nameKey?: string;
+  }
 >(({ className, hideIcon = false, payload, verticalAlign = "bottom", nameKey }, ref) => {
   const { config } = useChart();
 
