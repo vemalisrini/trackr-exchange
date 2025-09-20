@@ -24,6 +24,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 
 const sampleAlerts = [
+  // Finance Department Alerts
   {
     id: 1,
     type: 'error',
@@ -41,36 +42,85 @@ const sampleAlerts = [
   },
   {
     id: 2,
-    type: 'warning',
-    title: 'SLA Breach Warning - AWB Manifest',
-    description: 'AWB manifest file delayed by 15 minutes, approaching SLA breach threshold',
-    source: 'Cargo System',
-    department: 'Cargo',
-    priority: 'medium',
-    timestamp: '2024-12-19 08:45:00',
-    status: 'acknowledged',
-    assignedTo: 'Mike Chen',
-    escalationLevel: 0,
-    slaDeadline: '2024-12-19 09:30:00',
-    comments: 1
+    type: 'missing',
+    title: 'Interline Billing File Missing',
+    description: 'IDEC billing file from partner airline not received within SLA window',
+    source: 'Interline Portal',
+    department: 'Finance',
+    priority: 'high',
+    timestamp: '2024-12-19 08:30:00',
+    status: 'escalated',
+    assignedTo: 'Finance Team',
+    escalationLevel: 2,
+    slaDeadline: '2024-12-19 09:00:00',
+    comments: 4
   },
   {
     id: 3,
+    type: 'delayed',
+    title: 'Settlement File Delayed',
+    description: 'Payment gateway settlement file delayed by 45 minutes',
+    source: 'Payment Gateway',
+    department: 'Finance',
+    priority: 'medium',
+    timestamp: '2024-12-19 07:45:00',
+    status: 'in_progress',
+    assignedTo: 'Payment Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 10:00:00',
+    comments: 1
+  },
+  
+  // Loyalty Department Alerts
+  {
+    id: 4,
     type: 'duplicate',
-    title: 'Duplicate File Detected',
-    description: 'Loyalty accrual file LOYALTY_ACCRUAL_20241219.csv received twice',
+    title: 'Duplicate Accrual File Detected',
+    description: 'Loyalty accrual file LOYALTY_ACCRUAL_20241219.csv received twice from partner',
     source: 'Partner API',
     department: 'Loyalty',
-    priority: 'low',
+    priority: 'medium',
     timestamp: '2024-12-19 08:30:00',
-    status: 'resolved',
+    status: 'acknowledged',
     assignedTo: 'Emma Watson',
     escalationLevel: 0,
     slaDeadline: '2024-12-19 12:00:00',
-    comments: 0
+    comments: 1
   },
   {
-    id: 4,
+    id: 5,
+    type: 'error',
+    title: 'Tier Evaluation File Failed',
+    description: 'Monthly tier evaluation processing failed due to data validation errors',
+    source: 'Loyalty Engine',
+    department: 'Loyalty',
+    priority: 'high',
+    timestamp: '2024-12-19 06:15:00',
+    status: 'open',
+    assignedTo: 'Loyalty Team',
+    escalationLevel: 1,
+    slaDeadline: '2024-12-19 08:00:00',
+    comments: 3
+  },
+  {
+    id: 6,
+    type: 'warning',
+    title: 'Partner Settlement Reconciliation Mismatch',
+    description: 'Hotel partner settlement file shows transaction count mismatch',
+    source: 'Hotel Partner',
+    department: 'Loyalty',
+    priority: 'medium',
+    timestamp: '2024-12-19 05:30:00',
+    status: 'in_progress',
+    assignedTo: 'Settlement Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 11:00:00',
+    comments: 2
+  },
+
+  // Operations Department Alerts
+  {
+    id: 7,
     type: 'delayed',
     title: 'Crew Roster File Delayed',
     description: 'CREW_ROSTER.json is 30 minutes late from OPS Planning system',
@@ -85,22 +135,180 @@ const sampleAlerts = [
     comments: 3
   },
   {
-    id: 5,
+    id: 8,
+    type: 'missing',
+    title: 'Flight Movement Message Missing',
+    description: 'ASM (Aircraft Schedule Message) not received for flight AI101',
+    source: 'Flight Ops',
+    department: 'Operations',
+    priority: 'high',
+    timestamp: '2024-12-19 06:45:00',
+    status: 'escalated',
+    assignedTo: 'Flight Dispatch',
+    escalationLevel: 2,
+    slaDeadline: '2024-12-19 07:30:00',
+    comments: 5
+  },
+  {
+    id: 9,
     type: 'corrupt',
-    title: 'File Corruption Detected',
-    description: 'Sales report file failed checksum validation - potential data corruption',
-    source: 'Agency Portal',
+    title: 'Weather Data File Corrupted',
+    description: 'Weather forecast file failed integrity check - corrupted during transmission',
+    source: 'Weather Service',
+    department: 'Operations',
+    priority: 'medium',
+    timestamp: '2024-12-19 05:15:00',
+    status: 'acknowledged',
+    assignedTo: 'Weather Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 08:00:00',
+    comments: 1
+  },
+
+  // Cargo Department Alerts
+  {
+    id: 10,
+    type: 'warning',
+    title: 'SLA Breach Warning - AWB Manifest',
+    description: 'AWB manifest file delayed by 15 minutes, approaching SLA breach threshold',
+    source: 'Cargo System',
+    department: 'Cargo',
+    priority: 'medium',
+    timestamp: '2024-12-19 08:45:00',
+    status: 'acknowledged',
+    assignedTo: 'Mike Chen',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 09:30:00',
+    comments: 1
+  },
+  {
+    id: 11,
+    type: 'error',
+    title: 'ULD Tracking File Failed',
+    description: 'Unit Load Device tracking file processing failed - invalid data format',
+    source: 'ULD System',
+    department: 'Cargo',
+    priority: 'high',
+    timestamp: '2024-12-19 07:00:00',
+    status: 'open',
+    assignedTo: 'ULD Team',
+    escalationLevel: 1,
+    slaDeadline: '2024-12-19 09:00:00',
+    comments: 2
+  },
+  {
+    id: 12,
+    type: 'delayed',
+    title: 'Security Screening Logs Delayed',
+    description: 'Cargo security screening logs are 20 minutes overdue',
+    source: 'Security System',
+    department: 'Cargo',
+    priority: 'high',
+    timestamp: '2024-12-19 06:30:00',
+    status: 'in_progress',
+    assignedTo: 'Security Team',
+    escalationLevel: 1,
+    slaDeadline: '2024-12-19 07:15:00',
+    comments: 3
+  },
+
+  // Commercial Department Alerts
+  {
+    id: 13,
+    type: 'corrupt',
+    title: 'GDS Sales File Corruption',
+    description: 'Sales report file from Amadeus failed checksum validation - potential data corruption',
+    source: 'Amadeus GDS',
     department: 'Commercial',
     priority: 'high',
     timestamp: '2024-12-19 06:45:00',
     status: 'escalated',
-    assignedTo: 'Admin Team',
+    assignedTo: 'Sales Analytics',
     escalationLevel: 2,
     slaDeadline: '2024-12-19 08:00:00',
     comments: 5
   },
   {
-    id: 6,
+    id: 14,
+    type: 'missing',
+    title: 'ATPCO Fare File Missing',
+    description: 'Daily fare update file from ATPCO not received',
+    source: 'ATPCO',
+    department: 'Commercial',
+    priority: 'medium',
+    timestamp: '2024-12-19 05:45:00',
+    status: 'open',
+    assignedTo: 'Pricing Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 09:00:00',
+    comments: 1
+  },
+  {
+    id: 15,
+    type: 'warning',
+    title: 'Commission Settlement Discrepancy',
+    description: 'Agency commission file shows calculation discrepancies',
+    source: 'Commission System',
+    department: 'Commercial',
+    priority: 'medium',
+    timestamp: '2024-12-19 04:30:00',
+    status: 'acknowledged',
+    assignedTo: 'Commission Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 10:00:00',
+    comments: 2
+  },
+
+  // Customer Experience Department Alerts
+  {
+    id: 16,
+    type: 'delayed',
+    title: 'NPS Survey Data Delayed',
+    description: 'Weekly customer satisfaction survey data is 2 hours overdue',
+    source: 'Survey Platform',
+    department: 'Customer Experience',
+    priority: 'low',
+    timestamp: '2024-12-19 08:00:00',
+    status: 'acknowledged',
+    assignedTo: 'CX Analytics',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 12:00:00',
+    comments: 1
+  },
+  {
+    id: 17,
+    type: 'error',
+    title: 'Complaint Log Processing Failed',
+    description: 'Customer complaint data processing failed due to schema changes',
+    source: 'CRM System',
+    department: 'Customer Experience',
+    priority: 'medium',
+    timestamp: '2024-12-19 07:15:00',
+    status: 'in_progress',
+    assignedTo: 'CRM Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 10:00:00',
+    comments: 2
+  },
+  {
+    id: 18,
+    type: 'warning',
+    title: 'Web Analytics Data Gap',
+    description: 'Booking funnel analytics showing data gaps for 30-minute period',
+    source: 'Analytics Platform',
+    department: 'Customer Experience',
+    priority: 'low',
+    timestamp: '2024-12-19 06:00:00',
+    status: 'open',
+    assignedTo: 'Digital Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 14:00:00',
+    comments: 0
+  },
+
+  // Engineering Department Alerts
+  {
+    id: 19,
     type: 'missing',
     title: 'Engine Health Report Missing',
     description: 'Daily engine health monitoring report not received from maintenance system',
@@ -113,6 +321,83 @@ const sampleAlerts = [
     escalationLevel: 0,
     slaDeadline: '2024-12-19 10:00:00',
     comments: 1
+  },
+  {
+    id: 20,
+    type: 'error',
+    title: 'Parts Inventory Sync Failed',
+    description: 'Aircraft parts inventory synchronization failed with MRO system',
+    source: 'MRO System',
+    department: 'Engineering',
+    priority: 'high',
+    timestamp: '2024-12-19 05:30:00',
+    status: 'escalated',
+    assignedTo: 'Inventory Team',
+    escalationLevel: 1,
+    slaDeadline: '2024-12-19 08:00:00',
+    comments: 4
+  },
+  {
+    id: 21,
+    type: 'warning',
+    title: 'Compliance Report Threshold Breach',
+    description: 'Aircraft compliance report showing threshold breach warnings',
+    source: 'Compliance System',
+    department: 'Engineering',
+    priority: 'medium',
+    timestamp: '2024-12-19 04:45:00',
+    status: 'acknowledged',
+    assignedTo: 'Compliance Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 11:00:00',
+    comments: 1
+  },
+
+  // HR Department Alerts
+  {
+    id: 22,
+    type: 'delayed',
+    title: 'Crew Payroll File Delayed',
+    description: 'Monthly crew payroll processing file is 1 hour overdue',
+    source: 'Payroll System',
+    department: 'HR',
+    priority: 'medium',
+    timestamp: '2024-12-19 09:00:00',
+    status: 'in_progress',
+    assignedTo: 'Payroll Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 11:00:00',
+    comments: 2
+  },
+  {
+    id: 23,
+    type: 'missing',
+    title: 'Training Records Update Missing',
+    description: 'Weekly training completion records not received from training system',
+    source: 'Training Portal',
+    department: 'HR',
+    priority: 'low',
+    timestamp: '2024-12-19 08:15:00',
+    status: 'open',
+    assignedTo: 'Training Team',
+    escalationLevel: 0,
+    slaDeadline: '2024-12-19 16:00:00',
+    comments: 0
+  },
+  {
+    id: 24,
+    type: 'error',
+    title: 'Medical Records Processing Failed',
+    description: 'Crew medical records validation failed - invalid format detected',
+    source: 'Medical System',
+    department: 'HR',
+    priority: 'high',
+    timestamp: '2024-12-19 07:30:00',
+    status: 'escalated',
+    assignedTo: 'Medical Team',
+    escalationLevel: 1,
+    slaDeadline: '2024-12-19 09:30:00',
+    comments: 3
   }
 ];
 
@@ -198,8 +483,58 @@ const Alerts = () => {
   });
 
   const handleAction = (action: string, alertId: number) => {
-    console.log(`Action: ${action} on alert ${alertId}`);
-    // Here you would typically make an API call
+    const alert = sampleAlerts.find(a => a.id === alertId);
+    if (!alert) return;
+
+    switch (action) {
+      case 'acknowledge':
+        // Update alert status to acknowledged
+        alert.status = 'acknowledged';
+        setComment('');
+        // Show success toast
+        console.log(`Alert ${alertId} acknowledged`);
+        break;
+      case 'assign':
+        // Show assignment dialog (simplified for demo)
+        const assignee = prompt('Assign to:');
+        if (assignee) {
+          alert.assignedTo = assignee;
+          console.log(`Alert ${alertId} assigned to ${assignee}`);
+        }
+        break;
+      case 'comment':
+        // Add comment (simplified for demo)
+        if (comment.trim()) {
+          alert.comments += 1;
+          setComment('');
+          console.log(`Comment added to alert ${alertId}: ${comment}`);
+        }
+        break;
+      case 'resolve':
+        // Update alert status to resolved
+        alert.status = 'resolved';
+        setComment('');
+        console.log(`Alert ${alertId} resolved`);
+        break;
+      case 'email':
+        // Send email notification (demo)
+        console.log(`Email notification sent for alert ${alertId}`);
+        alert.comments += 1;
+        break;
+      case 'teams':
+        // Send Teams notification (demo)
+        console.log(`Teams notification sent for alert ${alertId}`);
+        alert.comments += 1;
+        break;
+      case 'slack':
+        // Send Slack notification (demo)
+        console.log(`Slack notification sent for alert ${alertId}`);
+        alert.comments += 1;
+        break;
+    }
+    
+    // Force re-render
+    setSelectedAlert(selectedAlert);
   };
 
   return (
@@ -434,23 +769,38 @@ const Alerts = () => {
                       </Button>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label>Notification Channels</Label>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline" className="button-swiss">
-                          <Mail className="h-4 w-4 mr-2" />
-                          Email
-                        </Button>
-                        <Button size="sm" variant="outline" className="button-swiss">
-                          <Send className="h-4 w-4 mr-2" />
-                          Teams
-                        </Button>
-                        <Button size="sm" variant="outline" className="button-swiss">
-                          <Slack className="h-4 w-4 mr-2" />
-                          Slack
-                        </Button>
+                      <div className="space-y-2">
+                        <Label>Notification Channels</Label>
+                        <div className="flex space-x-2">
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="button-swiss"
+                            onClick={() => handleAction('email', alert.id)}
+                          >
+                            <Mail className="h-4 w-4 mr-2" />
+                            Email
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="button-swiss"
+                            onClick={() => handleAction('teams', alert.id)}
+                          >
+                            <Send className="h-4 w-4 mr-2" />
+                            Teams
+                          </Button>
+                          <Button 
+                            size="sm" 
+                            variant="outline" 
+                            className="button-swiss"
+                            onClick={() => handleAction('slack', alert.id)}
+                          >
+                            <Slack className="h-4 w-4 mr-2" />
+                            Slack
+                          </Button>
+                        </div>
                       </div>
-                    </div>
                   </div>
                 );
               })()

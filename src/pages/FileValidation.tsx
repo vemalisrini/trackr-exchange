@@ -238,10 +238,20 @@ const FileValidation = () => {
                     </td>
                     <td>
                       <div className="flex items-center space-x-1">
-                        <Button size="sm" variant="outline" className="button-swiss p-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="button-swiss p-2"
+                          onClick={() => handleViewDetails(result.fileName)}
+                        >
                           <Eye className="h-3 w-3" />
                         </Button>
-                        <Button size="sm" variant="outline" className="button-swiss p-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="button-swiss p-2"
+                          onClick={() => handleDownloadReport(result.fileName)}
+                        >
                           <Download className="h-3 w-3" />
                         </Button>
                       </div>

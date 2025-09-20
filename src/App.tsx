@@ -9,6 +9,7 @@ import { MainLayout } from "./components/layout/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Alerts from "./pages/Alerts";
 import FileSources from "./pages/FileSources";
+import InwardFiles from "./pages/InwardFiles";
 import OutwardFiles from "./pages/OutwardFiles";
 import FileValidation from "./pages/FileValidation";
 import AuditLogs from "./pages/AuditLogs";
@@ -46,6 +47,7 @@ const AppRoutes = () => (
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="alerts" element={<Alerts />} />
       <Route path="file-sources" element={<FileSources />} />
+      <Route path="inward-files" element={<InwardFiles />} />
       <Route path="outward-files" element={<OutwardFiles />} />
       <Route path="file-validation" element={<FileValidation />} />
       <Route path="audit-logs" element={<AuditLogs />} />
